@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+//InventorProcess.methodsForInventorButton;
 
 namespace InventorProcess
 {
     public static partial class methodsForInventorButton
 
     {
-        public static void marchThroughCompleteFile(string completeFile)
+        public static void marchThroughCompleteFile(string completeFile, string[,] masterInventorList)
         {
-            int masterTableRows = 100000;
-            int masterTableCols = 16;
+            //int masterTableRows = 100000;
+            //int masterTableCols = 16;
             int presentRowNumber = 0;
 
-            string[,] masterInventorList = new string[masterTableRows, masterTableCols];
+            //string[,] masterInventorList = new string[masterTableRows, masterTableCols];
 
             // create the strings we are looking for String startString, record;
             string startString, record;
@@ -159,12 +160,51 @@ namespace InventorProcess
                 //--------all the name versions for one intentor
                 //--------all the info. on one patent publicaiton.
                 //
+                try
+                {
+                    masterInventorList[presentRowNumber, 0] = LFM.Trim();
+                }
+                catch
+                {
+                    masterInventorList[presentRowNumber, 0] = LFM;
+                }
 
-                masterInventorList[presentRowNumber, 0] = LFM;
-                masterInventorList[presentRowNumber, 1] = LF;
-                masterInventorList[presentRowNumber, 2] = LF1;
-                masterInventorList[presentRowNumber, 3] = LFM1;
-                masterInventorList[presentRowNumber, 4] = LF1M1;
+                try
+                {
+                    masterInventorList[presentRowNumber, 1] = LF.Trim();
+                }
+                catch
+                {
+                    masterInventorList[presentRowNumber, 1] = LF; 
+                }
+
+                 try
+                {
+                    masterInventorList[presentRowNumber, 2] = LF1.Trim();
+                }
+                catch
+                {
+                    masterInventorList[presentRowNumber, 2] = LF1;
+                }
+
+                try
+                {
+                    masterInventorList[presentRowNumber, 3] = LFM1.Trim();
+                }
+                catch
+                {
+                    masterInventorList[presentRowNumber, 3] = LFM1;
+                }
+            
+                try
+                {
+                    masterInventorList[presentRowNumber, 4] = LF1M1.Trim();
+                }
+                catch
+                {
+                    masterInventorList[presentRowNumber, 4] = LF1M1;
+                }
+;
                 masterInventorList[presentRowNumber, 5] = patentNo;
                 masterInventorList[presentRowNumber, 6] = title;
                 masterInventorList[presentRowNumber, 7] = date1;
@@ -273,6 +313,10 @@ namespace InventorProcess
             APD = cleanedrecord2.Substring(indiciesOfVerticalbars[20] + 1, indiciesOfVerticalbars[21] - indiciesOfVerticalbars[20] - 1); // APD
             CPCcodes = cleanedrecord2.Substring(indiciesOfVerticalbars[22], indiciesOfVerticalbars[23] - indiciesOfVerticalbars[22] - 1); // CPC
 
+            string lineToWrite;
+            string vertBar = Convert.ToString('|');
+
+           
             return (patentNumber, patentDate11, inventorNames, assignee, patentTitle, APD, CPCcodes);
         }
 

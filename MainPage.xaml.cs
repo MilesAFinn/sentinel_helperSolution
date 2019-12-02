@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 
 using static InventorProcess.methodsForInventorButton;
 using static InventorProcess.methodsForJSON;
-using DocumentFormat.OpenXml.Office.CustomUI;
+//using DocumentFormat.OpenXml.Office.CustomUI;
 
 namespace InventorProcess
 {
@@ -25,12 +25,22 @@ namespace InventorProcess
         {
             this.InitializeComponent();
         }
+
+        //int masterTableRows = 100000;
+        //int masterTableCols = 16;
+        int presentRowNumber = 0;
+
+        string[,] masterInventorList = new string[100000, 16];
+
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string inventorData;
 
             inventorData = readInventorsData(); // read file containing documents information for our inventors.
-            marchThroughCompleteFile(inventorData); // process the inventor information (lots of attention to name parts)
+            marchThroughCompleteFile(inventorData, masterInventorList); // process the inventor information (lots of attention to name parts)
+
+            //string temp = masterInventorList[0, 0];  // this works! Can see mIL.
 
         }
 
@@ -39,7 +49,7 @@ namespace InventorProcess
         {
             string othersData;
 
-            othersData = readOthersData(); // read file containing documents information for others.
+            othersData = readOthersData(masterInventorList); // read file containing documents information for others.
             //marchThroughCompleteFile(inventorData); // process the inventor information (lots of attention to name parts)
         }
     }
